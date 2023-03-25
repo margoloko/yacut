@@ -12,7 +12,11 @@ from .models import URLMap
 def index_view():
     form = UrlForm()
     if form.validate_on_submit():
-        short = form.custom_id.data or get_unique_short_id()
+        short = form.custom_id.data
+        if short is None:
+            short = get_unique_short_id()
+        if check_unique_short_url(short):
+            flash(f'Имя {short} уже занято!')
         url_map = URLMap(original=form.original_link.data,
                          short=short)
         db.session.add(url_map)
@@ -31,8 +35,14 @@ def get_unique_short_id():
         urlmap = URLMap.query.filter_by(short=short_id).first()
     return short_id
 
+def check_unique_short_url(custom_id):
+    if URLMap.query.filter_by(short=custom_id).first():
+        return custom_id
+    return None
 
-@app.route('/<string:short>', methods=('GET',))
+
+
+@app.route('/<string:short>', methods=['GET'])
 def redirect_url(short):
     return redirect(
-        URLMap.query.filter_by(short=short).first().original)
+        URLMap.query.filter_by(short=short).first_or_404().original)

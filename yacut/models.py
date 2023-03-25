@@ -1,4 +1,5 @@
 from datetime import datetime
+from flask import url_for
 
 from . import db
 
@@ -18,12 +19,10 @@ class URLMap(db.Model):
     def to_dict(self):
         return dict(
             url=self.original,
-            short_link=self.short)
+            short_link=url_for('redirect_url', short=self.short, _external=True))
 
     def from_dict(self, data):
         setattr(self, 'original', data['url'])
-        setattr(self, 'short', data['short_link'])
+        setattr(self, 'short', data['custom_id'])
 
-    def validate_custom_id(self, field):
-        if field.data and URLMap.query.filter_by(short=field.data).first():
-            print(f'Имя {field.data} уже занято!')
+
