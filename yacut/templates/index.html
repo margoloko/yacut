@@ -55,20 +55,19 @@
                   <h5 class="text-center">Ваша новая ссылка готова</h5>
                     {% for message in messages %}
                       <a href="{{ message }}">
-                                            {{ message }}
-                                        </a>
-                                    {% endfor %}
-                                {% endif %}
-                            {% endwith %}
-                        {% with messages = get_flashed_messages(category_filter=["error"]) %}
-                            {% if messages %}
-                                {% for message in messages %}
-                                    <h5> {{ message }} </h5>
-                                {% endfor %}
-                            {% endif %}
-                        {% endwith %}
-
-            </p>
+                        {{ message }}
+                      </a>
+                    {% endfor %}
+                  {% endif %}
+              {% endwith %}
+                      {% with messages = get_flashed_messages(category_filter=["error"]) %}
+                        {% if messages %}
+                          {% for message in messages %}
+                            <h5> {{ message }} </h5>
+                          {% endfor %}
+                        {% endif %}
+                      {% endwith %}
+              </p>
           </div>
           <div class="col-sm">
           </div>
