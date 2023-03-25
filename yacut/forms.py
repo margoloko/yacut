@@ -16,6 +16,4 @@ class UrlForm(FlaskForm):
                                         Optional()])
     submit = SubmitField('Создать')
 
-    def validate_custom_id(self, field):
-        if field.data and URLMap.query.filter_by(short=field.data).first():
-            print(f'Имя {field.data} уже занято!')
+
