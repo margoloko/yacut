@@ -35,11 +35,11 @@ def get_unique_short_id():
         urlmap = URLMap.query.filter_by(short=short_id).first()
     return short_id
 
+
 def check_unique_short_url(custom_id):
     if URLMap.query.filter_by(short=custom_id).first():
         return custom_id
     return None
-
 
 
 @app.route('/<string:short>', methods=['GET'])
