@@ -1,5 +1,6 @@
 from flask import jsonify, request
 from re import match
+from http import HTTPStatus as HS
 
 from . import app, db
 from .error_handlers import InvalidAPIUsage
@@ -11,8 +12,8 @@ from .view import get_unique_short_id
 def get_url(short_id):
     url = URLMap.query.filter_by(short=short_id).first()
     if url is None:
-        raise InvalidAPIUsage('Указанный id не найден', 404)
-    return jsonify({'url': url.original}), 200
+        raise InvalidAPIUsage('Указанный id не найден', HS.NOT_FOUND)
+    return jsonify({'url': url.original}), HS.OK
 
 
 @app.route('/api/id/', methods=['POST'])
@@ -36,4 +37,4 @@ def add_url():
     url_map.from_dict(data)
     db.session.add(url_map)
     db.session.commit()
-    return jsonify(url_map.to_dict()), 201
+    return jsonify(url_map.to_dict()), HS.CREATED
