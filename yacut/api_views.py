@@ -8,6 +8,10 @@ from .models import URLMap
 from .view import get_unique_short_id
 
 
+ALLOWED_CHECK_ID = '^[a-zA-Z0-9_]*$'
+LENGTH_CUSTOM_ID = 16
+
+
 @app.route('/api/id/<string:short_id>/', methods=['GET'])
 def get_url(short_id):
     url = URLMap.query.filter_by(short=short_id).first()
@@ -29,8 +33,7 @@ def add_url():
     if custom_id:
         if URLMap.query.filter_by(short=custom_id).first() is not None:
             raise InvalidAPIUsage(f'Имя "{custom_id}" уже занято.')
-
-        if not match('^[a-zA-Z0-9_]*$', custom_id) or len(custom_id) > 16:
+        if not match(ALLOWED_CHECK_ID, custom_id) or len(custom_id) > LENGTH_CUSTOM_ID:
             raise InvalidAPIUsage(
                 'Указано недопустимое имя для короткой ссылки')
     url_map = URLMap()
