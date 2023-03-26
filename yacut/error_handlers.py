@@ -28,10 +28,12 @@ def invalid_api_usage(error):
 
 @app.errorhandler(404)
 def page_not_found(error):
+    """Функция обработки исключения 404."""
     return render_template('404.html'), HS.NOT_FOUND
 
 
 @app.errorhandler(500)
 def internal_error(error):
+    """Функция обработки исключения 500."""
     db.session.rollback()
     return render_template('500.html'), HS.INTERNAL_SERVER_ERROR
