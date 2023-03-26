@@ -8,6 +8,7 @@ from .utils import get_unique_short_id, check_unique_short_url
 
 @app.route('/', methods=['GET', 'POST'])
 def index_view():
+    """View-функция главной страницы."""
     form = UrlForm()
     if form.validate_on_submit():
         short = form.custom_id.data
@@ -26,5 +27,6 @@ def index_view():
 
 @app.route('/<string:short>', methods=['GET'])
 def redirect_url(short):
+    """Функция, отвечающая за переадресацию.."""
     return redirect(
         URLMap.query.filter_by(short=short).first_or_404().original)
