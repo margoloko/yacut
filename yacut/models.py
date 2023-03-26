@@ -24,5 +24,5 @@ class URLMap(db.Model):
 
     def from_dict(self, data):
         """Функция преобразования словаря в экземпляр модели."""
-        setattr(self, 'original', data['url'])
-        setattr(self, 'short', data['custom_id'])
+        self.original = data['url']
+        self.short = data['custom_id']
