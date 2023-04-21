@@ -14,6 +14,12 @@ LENGTH_CUSTOM_ID = 16
 
 @app.route('/api/id/<string:short_id>/', methods=['GET'])
 def get_url(short_id):
+    """Получить оригинальную ссылку по короткой ссылке.
+
+    :param short_id: короткая ссылка
+    :return: словарь с оригинальной ссылкой
+    :rtype: dict
+    """
     url = URLMap.query.filter_by(short=short_id).first()
     if url is None:
         raise InvalidAPIUsage('Указанный id не найден', HS.NOT_FOUND)
@@ -22,6 +28,12 @@ def get_url(short_id):
 
 @app.route('/api/id/', methods=['POST'])
 def add_url():
+    """
+    Добавить новую короткую ссылку.
+
+    :return: словарь с добавленной короткой ссылкой
+    :rtype: dict
+    """
     data = request.get_json(silent=True)
     if not data:
         raise InvalidAPIUsage('Отсутствует тело запроса')
