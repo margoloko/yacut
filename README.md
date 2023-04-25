@@ -46,5 +46,5 @@ pip install -r requirements.txt
 - flask_wtf
 - wtforms
 
-### Автор:
-Балахонова Марина
+### Author:
+[Balakhonova Marina](https://github.com/margoloko)
